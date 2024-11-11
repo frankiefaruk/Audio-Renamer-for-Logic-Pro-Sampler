@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Build a Tkinter-Based Audio File Renamer and Text File Generator in Python</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <style>
+        :root {
+            --bg-color-dark: #212121;
+            --text-color-dark: #dcdcdc;
+            --bg-color-light: #f9f9f9;
+            --text-color-light: #333;
+            --highlight-color: #ffa500;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1100px;
+            margin: 20px auto;
+            background-color: var(--bg-color-light);
+            color: var(--text-color-light);
+        }
+        header {
+            background-color: var(--bg-color-light);
+            text-align: center;
+            padding: 20px;
+            height: auto;
+            position: relative;
+            margin: 0 auto;
+            width: 100%;
+        }
+        header img {
+            height: 50px;
+            display: block;
+            margin: 0 auto;
+            transition: filter 0.3s ease;
+        }
+        header img:hover {
+            filter: brightness(1.5);
+        }
+        .header-button {
+            background-color: var(--bg-color-light);
+            color: var(--text-color-light);
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            display: block;
+            margin: 10px auto;
+            transition: color 0.3s ease;
+        }
+        .header-button:hover {
+            color: #777;
+        }
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 50px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 16px;
+            color: var(--text-color-light);
+        }
+        .divider {
+            width: 90%;
+            margin: 0 auto;
+            border-top: 1px solid #777;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        pre {
+            border-radius: 6px;
+            padding: 1em;
+            margin: 1em 0;
+            overflow: auto;
+            background-color: #f0f0f0;
+        }
+        code {
+            font-family: 'Consolas', 'Monaco', 'Andale Mono', monospace;
+            color: grey;
+        }
+        a {
+            color: var(--highlight-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: #ffcc00;
+            text-decoration: underline;
+        }
+        a:visited {
+            color: #ff8c00;
+        }
+        .code-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .copy-button {
+            background-color: var(--bg-color-light);
+            color: var(--text-color-light);
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .copy-button:hover {
+            color: #777;
+        }
+        .blog-content {
+            margin: 20px;
+        }
+        @media (max-width: 600px) {
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                font-size: 14px;
+            }
+            header {
+                padding: 10px;
+            }
+            .header-button {
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img id="logo" src="https://raw.githubusercontent.com/frankiefaruk/logo/refs/heads/main/frank_faruk_logo_grey.svg" alt="Frank Faruk Logo">
+        <button class="header-button" onclick="window.location.href='https://frankfaruksampling.site'">FRANK FARUK SAMPLING</button>
+        <hr class="divider">
+        <button class="header-button" onclick="window.location.href='https://raw.githubusercontent.com/frankiefaruk/Audio-Renamer-for-Logic-Pro-Sampler/refs/heads/main/Audio%20File%20Renamer%20for%20Logic%20Sampler.py'">
+            <img id="code-icon" src="https://img.icons8.com/ios-filled/50/000000/code.png" alt="Code Icon" style="width: 24px; height: 24px; vertical-align: middle;">
+        </button>
+        <button class="theme-toggle" onclick="toggleTheme()">
+            <img id="theme-icon" src="https://img.icons8.com/ios-glyphs/30/000000/sun--v1.png" alt="Light Mode Icon" style="width: 20px; height: 20px; vertical-align: middle;">
+        </button>
+    </header>
+    <div class="blog-content">
+        <h1>How to Build a Tkinter-Based Audio File Renamer and Text File Generator in Python</h1>
+        <p>In this guide, we’ll explore how to create a simple GUI tool using Python and Tkinter. This tool allows users to rename audio files and generate a text file based on the user-specified format. Let’s dive into the steps and the code you need to make it happen.</p>
+        
+        <h2>Step 1: Setting Up the Tkinter GUI</h2>
+        <p>To get started, import the necessary modules:</p>
+        <pre><code class="language-python">import tkinter as tk
+from tkinter import filedialog, messagebox
+import os
+        </code></pre>
+
+        <h2>Step 2: Building the Renaming and Text File Generation Functions</h2>
+        <p>Below are the core functions for renaming files and creating a text file:</p>
+        <pre><code class="language-python">def rename_files(file_list, new_name, expression, group_name):
+    for index, file in enumerate(file_list):
+        new_file_name = f"{index}_{new_name}_{expression}_{group_name}.wav"
+        os.rename(file, new_file_name)
+
+def create_text_file(file_list, output_path):
+    with open(output_path, 'w') as file:
+        for f in file_list:
+            file.write(f + '\n')
+        </code></pre>
+
+        <h2>Step 3: Creating the User Interface</h2>
+        <p>Next, let’s create the interface to allow users to select files, set naming conventions, and generate outputs:</p>
+        <pre><code class="language-python">root = tk.Tk()
+root.title("Audio File Renamer and Generator")
+
+tk.Label(root, text="New Name").grid(row=0)
+new_name_entry = tk.Entry(root)
+new_name_entry.grid(row=0, column=1)
+
+tk.Button(root, text="Select Files", command=select_files).grid(row=2, column=0)
+tk.Button(root, text="Rename Files", command=rename_files).grid(row=2, column=1)
+
+root.mainloop()
+        </code></pre>
+    </div>
+
+    <!-- Footer Section -->
+<hr class="divider">
+<footer style="text-align: center; margin: 20px 0; color: var(--text-color-light); font-size: 14px;">
+    Design by ChatGPT / Claude.ai / Gemini and <a href="https://frankfaruksampling.site" target="_blank">Frank Faruk Sampling</a>
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script>
+    function copyToClipboard(selector) {
+        const codeBlock = document.querySelector(selector);
+        const textArea = document.createElement('textarea');
+        textArea.value = codeBlock.textContent;
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            alert('Code copied to clipboard!');
+        } catch (err) {
+            console.error('Failed to copy text', err);
+        }
+        document.body.removeChild(textArea);
+    }
+
+    function toggleTheme() {
+        const root = document.documentElement;
+        const themeToggle = document.querySelector('.theme-toggle');
+        const logo = document.getElementById('logo');
+        const codeIcon = document.getElementById('code-icon');
+        const themeIcon = document.getElementById('theme-icon');
+        const isLightMode = getComputedStyle(root).getPropertyValue('--bg-color-light').trim() === '#f9f9f9';
+
+        if (isLightMode) {
+            // Switch to dark mode
+            root.style.setProperty('--bg-color-light', '#212121');
+            root.style.setProperty('--text-color-light', '#dcdcdc');
+            themeIcon.src = 'https://img.icons8.com/ios-glyphs/30/dcdcdc/moon-symbol.png'; // Dark mode icon
+            themeIcon.alt = 'Dark Mode Icon';
+            logo.src = 'https://raw.githubusercontent.com/frankiefaruk/logo/refs/heads/main/frank_faruk_logo_white.svg';
+            codeIcon.src = 'https://img.icons8.com/ios-filled/50/dcdcdc/code.png';
+        } else {
+            // Switch to light mode
+            root.style.setProperty('--bg-color-light', '#f9f9f9');
+            root.style.setProperty('--text-color-light', '#333');
+            themeIcon.src = 'https://img.icons8.com/ios-glyphs/30/000000/sun--v1.png'; // Light mode icon
+            themeIcon.alt = 'Light Mode Icon';
+            logo.src = 'https://raw.githubusercontent.com/frankiefaruk/logo/refs/heads/main/frank_faruk_logo_grey.svg';
+            codeIcon.src = 'https://img.icons8.com/ios-filled/50/000000/code.png';
+        }
+    }
+</script>
+</body>
+</html>
